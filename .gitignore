@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/TradeSystem/TradeSystem.Core/obj
+/TradeSystem/TradeSystem.Core/bin/Debug/netcoreapp3.1
+/TradeSystem/TradeSystem.Data/bin/Debug/netcoreapp3.1
+/TradeSystem/TradeSystem.Data/obj
+/TradeSystem/TradeSystem.Entities/bin/Debug/netcoreapp3.1
+/TradeSystem/TradeSystem.Entities/obj
+/TradeSystem/TradeSystem.Service.Analysis/bin/Debug/netcoreapp3.1
+/TradeSystem/TradeSystem.Service.Analysis/obj
