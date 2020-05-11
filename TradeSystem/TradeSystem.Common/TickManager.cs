@@ -10,7 +10,7 @@ namespace TradeSystem.Common
         #region Data Members
 
         private Ticker ticker;
-        KiteAPIManager kiteAPIManager = new KiteAPIManager();
+        KiteAPIManager kiteAPIManager = KiteAPIManager.Instance;
 
         #endregion
 
@@ -58,7 +58,6 @@ namespace TradeSystem.Common
         //internal void OnLogin(object sender, StringEventArgs args)
         internal void OnLogin(object sender)
         {
-            kiteAPIManager.Initialize("AccessToken");
             Start();
         }
 

@@ -9,6 +9,7 @@ namespace TradeSystem.Entities
     {
         #region Properties
 
+        public string Symbol { get; set; }
         public DateTime TimeStamp { get; set; }
         public decimal Open { get; set; }
         public decimal High { get; set; }
