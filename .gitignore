@@ -12,3 +12,5 @@
 /TradeSystem/TradeSystem.Service.Analysis/obj
 /TradeSystem/TradeSystem.Common/bin/Debug/netcoreapp3.1
 /TradeSystem/TradeSystem.Common/obj
+/TradeSystem/TradeSystem.TestConsole/obj
+/TradeSystem/TradeSystem.TestConsole/bin/Debug/netcoreapp3.1

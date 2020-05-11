@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeSystem.Service.Analysis", "TradeSystem.Service.Analysis\TradeSystem.Service.Analysis.csproj", "{7D0024BE-CDD3-4D59-9EF6-BAC3F7E6F586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeSystem.Service.Analysis", "TradeSystem.Service.Analysis\TradeSystem.Service.Analysis.csproj", "{7D0024BE-CDD3-4D59-9EF6-BAC3F7E6F586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeSystem.Core", "TradeSystem.Core\TradeSystem.Core.csproj", "{3B6CB33B-48D8-42AB-9CFF-CC84D374C6F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeSystem.Core", "TradeSystem.Core\TradeSystem.Core.csproj", "{3B6CB33B-48D8-42AB-9CFF-CC84D374C6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeSystem.Entities", "TradeSystem.Entities\TradeSystem.Entities.csproj", "{5E8BABFA-BDB8-47B7-9033-8F27E9110FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeSystem.Entities", "TradeSystem.Entities\TradeSystem.Entities.csproj", "{5E8BABFA-BDB8-47B7-9033-8F27E9110FF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeSystem.Data", "TradeSystem.Data\TradeSystem.Data.csproj", "{C7A572C9-508F-451C-8EF6-E7A4AEBB906B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeSystem.Data", "TradeSystem.Data\TradeSystem.Data.csproj", "{C7A572C9-508F-451C-8EF6-E7A4AEBB906B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeSystem.Common", "TradeSystem.Common\TradeSystem.Common.csproj", "{A3343745-90EA-45E5-A572-9EECC849C51A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeSystem.Common", "TradeSystem.Common\TradeSystem.Common.csproj", "{A3343745-90EA-45E5-A572-9EECC849C51A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeSystem.TestConsole", "TradeSystem.TestConsole\TradeSystem.TestConsole.csproj", "{16367A13-1D78-4631-9167-20ECA59367D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A3343745-90EA-45E5-A572-9EECC849C51A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3343745-90EA-45E5-A572-9EECC849C51A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3343745-90EA-45E5-A572-9EECC849C51A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16367A13-1D78-4631-9167-20ECA59367D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16367A13-1D78-4631-9167-20ECA59367D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16367A13-1D78-4631-9167-20ECA59367D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16367A13-1D78-4631-9167-20ECA59367D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
