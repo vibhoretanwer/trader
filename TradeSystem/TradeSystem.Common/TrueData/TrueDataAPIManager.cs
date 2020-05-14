@@ -1,8 +1,11 @@
 ﻿using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using TradeSystem.Common.TrueData;
 using TradeSystem.Common.TrueData.Models;
+using WebSocketSharp;
 
 namespace TradeSystem.Common
 {
@@ -26,7 +29,7 @@ namespace TradeSystem.Common
         private string accessToken;
         private string publicToken;
 
-        private static TrueDataAPIManager instance;
+        private static TrueDataAPIManager instance;            
 
         #endregion
 
@@ -44,6 +47,9 @@ namespace TradeSystem.Common
                 return instance;
             }
         }
+
+        public HistoricalDataStream HistoricalDataStream { get; set; } = new HistoricalDataStream(trueDataUserName, trueDataPassword);
+        public RealTimeDataStream RealTimeDataStream { get; set; } = new RealTimeDataStream(trueDataUserName, trueDataPassword);
 
         #endregion
 
@@ -79,6 +85,7 @@ namespace TradeSystem.Common
             }
 
         }
+
         #endregion
     }
 }

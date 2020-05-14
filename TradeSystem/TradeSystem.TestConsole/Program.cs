@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TradeSystem.Common;
 using TradeSystem.Entities;
 
 namespace TradeSystem.TestConsole
@@ -10,9 +11,11 @@ namespace TradeSystem.TestConsole
     {
         static void Main(string[] args)
         {
-            List<Candle> candles = ReadTestData();
+            //List<Candle> candles = ReadTestData();
 
-            Console.WriteLine("Hello World!");
+            TrueDataAPIManager.Instance.HistoricalDataStream.Subscribe("DIVISLAB", Common.TrueData.Interval.EOD, new DateTime(2019, 01, 01), new DateTime(2020, 05, 24));
+
+            Console.ReadKey();
         }
 
         private static List<Candle> ReadTestData()
