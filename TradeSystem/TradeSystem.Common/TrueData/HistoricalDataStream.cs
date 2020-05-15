@@ -24,7 +24,7 @@ namespace TradeSystem.Common.TrueData
         private string trueDataUserName;
         private string trueDataPassword;
 
-        public delegate void CandleRecievedHandler(object sender, CandleRecievedEventArgs args);
+        public delegate void CandleRecievedHandler(string symbol, CandleRecievedEventArgs args);
         public event CandleRecievedHandler OnCandleRecieved;
 
         Dictionary<Interval, string> intervals = new Dictionary<Interval, string>()
@@ -80,7 +80,7 @@ namespace TradeSystem.Common.TrueData
                                 Volume = ulong.Parse(item[5]),
                             };
 
-                            OnCandleRecieved?.Invoke(this, new CandleRecievedEventArgs(candle));
+                            OnCandleRecieved?.Invoke(content.Symbol, new CandleRecievedEventArgs(candle));
 
                             ulong volume = ulong.Parse(item[5]);
                             totalVolume += volume;
