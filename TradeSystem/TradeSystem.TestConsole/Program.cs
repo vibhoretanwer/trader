@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TradeSystem.Common;
+using TradeSystem.Common.TrueData;
 using TradeSystem.Entities;
 
 namespace TradeSystem.TestConsole
@@ -13,9 +14,20 @@ namespace TradeSystem.TestConsole
         {
             //List<Candle> candles = ReadTestData();
 
-            TrueDataAPIManager.Instance.HistoricalDataStream.Subscribe("DIVISLAB", Common.TrueData.Interval.EOD, new DateTime(2019, 01, 01), new DateTime(2020, 05, 24));
-
+            Start();
             Console.ReadKey();
+        }
+
+        private static void Start()
+        {
+            var dataStream = TrueDataAPIManager.Instance.HistoricalDataStream;
+            dataStream.Subscribe("NIFTY-I", Common.TrueData.Interval.EOD, new DateTime(2019, 01, 01), new DateTime(2020, 05, 24));
+            dataStream.OnCandleRecieved += HistoricalDataStream_OnCandleRecieved;
+        }
+
+        private static void HistoricalDataStream_OnCandleRecieved(object sender, CandleRecievedEventArgs args)
+        {
+            Console.WriteLine(args.Candle.ToString());
         }
 
         private static List<Candle> ReadTestData()

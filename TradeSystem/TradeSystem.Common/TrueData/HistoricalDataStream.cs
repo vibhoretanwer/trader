@@ -4,16 +4,28 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using TradeSystem.Common.TrueData.Models;
+using TradeSystem.Entities;
 using WebSocketSharp;
 
 namespace TradeSystem.Common.TrueData
 {
+    public class CandleRecievedEventArgs : EventArgs
+    {
+        public Candle Candle { get; set; }
+        public CandleRecievedEventArgs(Candle candle)
+        {
+            this.Candle = candle;
+        }
+    }
     public class HistoricalDataStream
     {
         private WebSocket historicalWebSocket;
 
         private string trueDataUserName;
         private string trueDataPassword;
+
+        public delegate void CandleRecievedHandler(object sender, CandleRecievedEventArgs args);
+        public event CandleRecievedHandler OnCandleRecieved;
 
         Dictionary<Interval, string> intervals = new Dictionary<Interval, string>()
         {
@@ -32,7 +44,7 @@ namespace TradeSystem.Common.TrueData
 
         ulong totalVolume;
         ulong averageVolume;
-        ulong index;
+        uint index;
 
         private void ConnectHistoricalDataSocket()
         {
@@ -57,15 +69,28 @@ namespace TradeSystem.Common.TrueData
 
                         content.data.ForEach(item =>
                         {
+                            Candle candle = new Candle()
+                            {
+                                Index = index,
+                                TimeStamp = DateTime.Parse(item[0]),
+                                Open = Decimal.Parse(item[1]),
+                                High = Decimal.Parse(item[2]),
+                                Low = Decimal.Parse(item[3]),
+                                Close = Decimal.Parse(item[4]),
+                                Volume = ulong.Parse(item[5]),
+                            };
+
+                            OnCandleRecieved?.Invoke(this, new CandleRecievedEventArgs(candle));
+
                             ulong volume = ulong.Parse(item[5]);
                             totalVolume += volume;
                             averageVolume = totalVolume / index;
                             index++;
 
-                            Console.Write(content.Symbol + " - ");
-                            item.ForEach(i => Console.Write(i + ", "));
-                            Console.Write(averageVolume);
-                            Console.WriteLine();
+                            //Console.Write(content.Symbol + " - ");
+                            //item.ForEach(i => Console.Write(i + ", "));
+                            //Console.Write(averageVolume);
+                            //Console.WriteLine();
                         });                        
                     };
                 }

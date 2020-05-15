@@ -2,7 +2,7 @@
 
 namespace TradeSystem.Core
 {
-    public class Class1
+    public class Analyzer
     {
     }
 }
