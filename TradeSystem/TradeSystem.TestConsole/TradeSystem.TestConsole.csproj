@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TradeSystem.Common\TradeSystem.Common.csproj" />
+    <ProjectReference Include="..\TradeSystem.Core\TradeSystem.Core.csproj" />
     <ProjectReference Include="..\TradeSystem.Entities\TradeSystem.Entities.csproj" />
   </ItemGroup>
 

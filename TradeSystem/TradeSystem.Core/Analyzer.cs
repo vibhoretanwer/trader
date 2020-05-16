@@ -74,6 +74,12 @@ namespace TradeSystem.Core
         //    //Debug.WriteLine($"LTP = {tick.LastPrice}");
         //}
 
+        public void Update(Candle candle)
+        {
+            model.Candles.Add(candle);
+            BuildHekinAshiCandle();
+        }
+
         public Signal Analyze()
         {
             Signal signal = new Signal() { Price = 0, Type = SignalType.None };
@@ -133,10 +139,10 @@ namespace TradeSystem.Core
                 heikinAshi.Low = Math.Min(Math.Min(heikinAshi.Open, heikinAshi.Close), candle.Low);
             }
             ulong netVolume = candle.Volume;
-            if (model.HeikinAshi.Count > 2)
-            {
-                netVolume = candle.Volume - model.HeikinAshi.ElementAt(model.HeikinAshi.Count - 2).Volume;
-            }
+            //if (model.HeikinAshi.Count > 2)
+            //{
+            //    netVolume = candle.Volume - model.HeikinAshi.ElementAt(model.HeikinAshi.Count - 2).Volume;
+            //}
             heikinAshi.CandleVolume = netVolume;
             heikinAshi.Volume = candle.Volume;
             heikinAshi.TimeStamp = candle.TimeStamp;
