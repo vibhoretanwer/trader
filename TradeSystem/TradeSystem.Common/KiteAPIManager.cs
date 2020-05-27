@@ -54,13 +54,13 @@ namespace TradeSystem.Common
         {
             Kite = new Kite(apiKey, Debug: false);
 
-            //accessToken = "7yV9NfAHx05w0n7ZhvZBfAsAdCDCR8cp";
-            //publicToken = "HGnIgQII610KH8Y1Hp2I1reWWyA59Lcl";
+            accessToken = "1jVD206VjiptstiUFY6D1BNMbVY7ywaG";
+            publicToken = "i5EHru03wgUMtJX217ZTwUuh4U1e5YVD";
 
             if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(publicToken))
             {
                 string url = Kite.GetLoginURL();
-                string requestToken = "M7mlT6dFHITJSCfhcw37UgyMxSDOfSY8";
+                string requestToken = "roEUcn7T2SF0Pb4JuygBskehsFiVVQM6";
                 User user = Kite.GenerateSession(requestToken, appSecret);
 
                 accessToken = user.AccessToken;

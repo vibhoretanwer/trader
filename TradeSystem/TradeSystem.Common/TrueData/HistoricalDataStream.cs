@@ -31,6 +31,7 @@ namespace TradeSystem.Common.TrueData
         {
             { Interval.Tick, "tick"},
             { Interval.Minute, "1min"},
+            { Interval.FiveMinute, "5min"},
             { Interval.FifteenMinute, "15min"},
             { Interval.ThirtyMinute, "30min"},
             { Interval.EOD, "EOD"},
@@ -67,31 +68,48 @@ namespace TradeSystem.Common.TrueData
                     {
                         HistoricalDataStreamContent content = JsonConvert.DeserializeObject<HistoricalDataStreamContent>(args.Data);
 
-                        content.data.ForEach(item =>
+                        if (content.Interval == "tick")
                         {
-                            Candle candle = new Candle()
+                            content.data.ForEach(item =>
                             {
-                                Index = index,
-                                TimeStamp = DateTime.Parse(item[0]),
-                                Open = Decimal.Parse(item[1]),
-                                High = Decimal.Parse(item[2]),
-                                Low = Decimal.Parse(item[3]),
-                                Close = Decimal.Parse(item[4]),
-                                Volume = ulong.Parse(item[5]),
-                            };
+                                Candle candle = new Candle()
+                                {
+                                    Index = index,
+                                    TimeStamp = DateTime.Parse(item[0]),
+                                    Close = Decimal.Parse(item[1]),
+                                };
 
-                            OnCandleRecieved?.Invoke(content.Symbol, new CandleRecievedEventArgs(candle));
+                                OnCandleRecieved?.Invoke(content.Symbol, new CandleRecievedEventArgs(candle));
+                            });
+                        }
+                        else
+                        {
+                            content.data.ForEach(item =>
+                            {
+                                Candle candle = new Candle()
+                                {
+                                    Index = index,
+                                    TimeStamp = DateTime.Parse(item[0]),
+                                    Open = Decimal.Parse(item[1]),
+                                    High = Decimal.Parse(item[2]),
+                                    Low = Decimal.Parse(item[3]),
+                                    Close = Decimal.Parse(item[4]),
+                                    Volume = ulong.Parse(item[5]),
+                                };
 
-                            ulong volume = ulong.Parse(item[5]);
-                            totalVolume += volume;
-                            averageVolume = totalVolume / index;
-                            index++;
+                                OnCandleRecieved?.Invoke(content.Symbol, new CandleRecievedEventArgs(candle));
 
-                            //Console.Write(content.Symbol + " - ");
-                            //item.ForEach(i => Console.Write(i + ", "));
-                            //Console.Write(averageVolume);
-                            //Console.WriteLine();
-                        });                        
+                                ulong volume = ulong.Parse(item[5]);
+                                totalVolume += volume;
+                                averageVolume = totalVolume / index;
+                                index++;
+
+                                //Console.Write(content.Symbol + " - ");
+                                //item.ForEach(i => Console.Write(i + ", "));
+                                //Console.Write(averageVolume);
+                                //Console.WriteLine();
+                            });
+                        }
                     };
                 }
                 catch (Exception ex)

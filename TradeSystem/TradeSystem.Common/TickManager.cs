@@ -25,7 +25,7 @@ namespace TradeSystem.Common
 
         #region Methods
 
-        private void Start()
+        public void Start()
         {
             ticker = kiteAPIManager.Ticker;
             InitTicker();
