@@ -2,7 +2,7 @@
 using System;
 
 namespace TradeSystem.Common
-{    
+{
     public class KiteAPIManager
     {
         #region Data Members

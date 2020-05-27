@@ -50,7 +50,7 @@ namespace TradeSystem.Common
         private void SubscribeToInstruments()
         {
             //var tokens = new UInt32[] { 54425863, 54489351 };
-            var tokens = new UInt32[] { 715267 };
+            var tokens = new UInt32[] { 306691 };
             ticker.Subscribe(tokens);
             ticker.SetMode(tokens, Mode: Constants.MODE_FULL);
         }
@@ -85,7 +85,7 @@ namespace TradeSystem.Common
 
         private void OnTick(Tick tickData)
         {
-            
+
         }
 
         private void OnOrderUpdate(Order OrderData)
