@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KiteConnect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace TradeSystem.Core.Models
     {
         #region Fields
 
-        //private List<Tick> ticks = new List<Tick>();
+        private List<Tick> ticks = new List<Tick>();
         //private List<Signal> signals = new List<Signal>();
         private List<Candle> candles = new List<Candle>();
         private List<Candle> heikinAshi = new List<Candle>();
@@ -20,13 +21,13 @@ namespace TradeSystem.Core.Models
 
         #region Properties
 
-        //public List<Tick> Ticks
-        //{
-        //    get
-        //    {
-        //        return ticks;
-        //    }
-        //}
+        public List<Tick> Ticks
+        {
+            get
+            {
+                return ticks;
+            }
+        }
 
         //public List<Signal> Signals
         //{
@@ -123,7 +124,7 @@ namespace TradeSystem.Core.Models
         //    macdData = macdData.Take(count).ToList();
         //    if (macdData.Count > 0)
         //    {
-        //        Debug.WriteLine($"Tick({Candles.Count}), LTP = {Candles.Last().Close}, MACD = {macdData.Last().Value}, Signal = {macdData.Last().Signal}, Histogram = {macdData.Last().Histogram}");
+        //        Console.WriteLine($"Tick({Candles.Count}), LTP = {Candles.Last().Close}, MACD = {macdData.Last().Value}, Signal = {macdData.Last().Signal}, Histogram = {macdData.Last().Histogram}");
         //    }
         //    return macdData;
         //}

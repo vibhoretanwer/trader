@@ -10,7 +10,7 @@ namespace TradeSystem.Common
         #region Data Members
 
         private Ticker ticker;
-        KiteAPIManager kiteAPIManager = KiteAPIManager.Instance;
+        KiteAPIManager kiteAPIManager = KiteAPIManager.Instance;        
 
         #endregion
 
@@ -49,13 +49,13 @@ namespace TradeSystem.Common
 
         private void SubscribeToInstruments()
         {
-            //var tokens = new UInt32[] { 54425863, 54489351 };
             var tokens = new UInt32[] { 306691 };
+            //var tokens = new UInt32[] { 24507906 };
+            
             ticker.Subscribe(tokens);
             ticker.SetMode(tokens, Mode: Constants.MODE_FULL);
         }
-
-        //internal void OnLogin(object sender, StringEventArgs args)
+        
         internal void OnLogin(object sender)
         {
             Start();
@@ -85,7 +85,7 @@ namespace TradeSystem.Common
 
         private void OnTick(Tick tickData)
         {
-
+            
         }
 
         private void OnOrderUpdate(Order OrderData)

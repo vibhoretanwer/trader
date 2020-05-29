@@ -62,6 +62,10 @@
       <Project>{6FA4C8AD-45B2-4865-B879-8F72E004A09E}</Project>
       <Name>TradeSystem.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TradeSystem.Entities\TradeSystem.Entities.csproj">
+      <Project>{F245AC90-8BE8-4DEE-8D6D-F5F533A2BC45}</Project>
+      <Name>TradeSystem.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

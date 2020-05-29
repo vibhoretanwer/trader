@@ -16,18 +16,15 @@ namespace TradeSystem.Core.Strategies
         public Signal Apply(AnalysisModel model)
         {
             Signal signal = new Signal(SignalType.None, 0);
-            if (model.HeikinAshi.Count < 5) return signal;
-            if (model.Candles.Last().TimeStamp.Date.Day == 4 && model.Candles.Last().TimeStamp.Date.Month == 5)
-            {
+            if (model.HeikinAshi.Count < 2) return signal;
 
-            }
             LongEntry(signal, model);
             ShortEntry(signal, model);
-            signal.Price = model.Candles.Last().Close;
-            //ShortExit(signal, model);
-            //LongExit(signal, model);
 
-            //signal.Price = model.LTP;
+            ShortExit(signal, model);
+            LongExit(signal, model);
+
+            signal.Price = model.LTP;
 
             return signal;
         }

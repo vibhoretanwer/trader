@@ -147,7 +147,7 @@ namespace TradeSystem.Entities
         public void Print()
         {
             var color = IsGreen ? "Green" : "Red";
-            Debug.WriteLine($"O={Open}, H={High}, L={Low}, C={Close}, V={Volume}, NV={CandleVolume}, Color = {color}");
+            Console.WriteLine($"T={TimeStamp.ToShortTimeString()}, O={Open.ToString("0.####")}, H={High.ToString("0.####")}, L={Low.ToString("0.####")}, C={Close.ToString("0.####")}, V={Volume}, NV={CandleVolume}, Color = {color}");
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KiteConnect;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -16,7 +17,7 @@ namespace TradeSystem.Core
         #region Constants
 
         const int Seconds = 1000;
-        const int Minutes = 1 * 60 * Seconds;
+        const int Minutes = 5 * 60 * Seconds;
 
         #endregion
 
@@ -67,12 +68,12 @@ namespace TradeSystem.Core
         #endregion
 
         #region Methods        
-        //public void Update(Tick tick)
-        //{
-        //    model.Ticks.Add(tick);
-        //    model.LTP = tick.LastPrice;
-        //    //Debug.WriteLine($"LTP = {tick.LastPrice}");
-        //}
+        public void Update(Tick tick)
+        {
+            model.Ticks.Add(tick);
+            model.LTP = tick.LastPrice;
+            //Console.WriteLine($"{tick.Timestamp} - LTP = {tick.LastPrice}");
+        }
 
         public void Update(Candle candle)
         {
@@ -87,6 +88,10 @@ namespace TradeSystem.Core
             {
                 signal = strategy.Apply(model);
             }
+            //if (signal.Type != SignalType.None)
+            //{
+            //    Console.WriteLine(signal.ToString());
+            //}
             return signal;
         }
 
@@ -104,15 +109,18 @@ namespace TradeSystem.Core
 
         private void BuildCandle(DateTime signalTime)
         {
-            var startTime = signalTime.AddMinutes(-1);
+            var startTime = signalTime.AddMinutes(-5);
             startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, startTime.Minute, 0);
-            var endTime = new DateTime(signalTime.Year, signalTime.Month, signalTime.Day, signalTime.Hour, signalTime.Minute, 0);
+            //var endTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, startTime.Minute + 4, 59);
+            var endTime = startTime.AddMinutes(4).AddSeconds(59);
 
-            Candle candle = GetCurrentCandle(signalTime, startTime, endTime);
+            Candle candle = GetCurrentCandle(startTime, endTime);
             if (candle != null)
             {
                 candle.Index = (uint)model.Candles.Count;
                 model.Candles.Add(candle);
+
+                //candle.Print();
             }
         }
 
@@ -149,52 +157,54 @@ namespace TradeSystem.Core
 
             heikinAshi.Index = (uint)model.HeikinAshi.Count;
             model.HeikinAshi.Add(heikinAshi);
+
+            heikinAshi.Print();
         }
 
-        private Candle GetCurrentCandle(DateTime signalTime, DateTime startTime, DateTime endTime)
+        private Candle GetCurrentCandle(DateTime startTime, DateTime endTime)
         {
-            //var ticks = model.Ticks.Where(tick => tick.LastTradeTime >= startTime && tick.LastTradeTime <= endTime).ToList();
-            //if (ticks.Any() == false)
-            //    return null;
+            var ticks = model.Ticks.Where(tick => tick.LastTradeTime >= startTime && tick.LastTradeTime <= endTime).ToList();
+            if (ticks.Any() == false)
+                return null;
 
-            //var open = ticks.First().LastPrice;
-            //var close = ticks.Last().LastPrice;
-            //var high = ticks.Max(tick => tick.LastPrice);
-            //var low = ticks.Min(tick => tick.LastPrice);
-            //var volume = ticks.Last().Volume;
+            var open = ticks.First().LastPrice;
+            var close = ticks.Last().LastPrice;
+            var high = ticks.Max(tick => tick.LastPrice);
+            var low = ticks.Min(tick => tick.LastPrice);
+            var volume = ticks.Last().Volume;
 
-            //var candle = new Candle()
-            //{
-            //    Open = open,
-            //    Close = close,
-            //    High = high,
-            //    Low = low,
-            //    Volume = volume,
-            //    TimeStamp = signalTime
-            //};
+            var candle = new Candle()
+            {
+                Open = open,
+                Close = close,
+                High = high,
+                Low = low,
+                Volume = volume,
+                TimeStamp = startTime
+            };
 
-            //ulong netVolume = volume;
-            //if (model.Candles.Count > 0)
-            //{
-            //    netVolume = volume - model.Candles.Last().Volume;
-            //}
-            //candle.CandleVolume = netVolume;
+            ulong netVolume = volume;
+            if (model.Candles.Count > 0)
+            {
+                netVolume = volume - model.Candles.Last().Volume;
+            }
+            candle.CandleVolume = netVolume;
 
-            //return candle;
-            return null;
+            return candle;
         }
 
         private void SecondsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (e.SignalTime.Second == 0)
+            if ((e.SignalTime.Minute % 5 == 0) && e.SignalTime.Second == 0)
             {
                 minutesTimer.Start();
                 secondsTimer.Stop();
                 secondsTimer.Dispose();
+                Console.WriteLine("System Started");
             }
         }
         private void Minute_Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
+        {            
             BuildCandle(e.SignalTime);
             BuildHekinAshiCandle();
             //OnCandleRecieved(Model.HeikinAshi.Last());
@@ -202,13 +212,12 @@ namespace TradeSystem.Core
             var signal = Analyze();
             if (model.HeikinAshi.Any())
             {
-                model.HeikinAshi.Last().Print();
-                model.HeikinAshi.Any();
+                //model.HeikinAshi.Last().Print();
             }
             if (signal.Type != SignalType.None)
             {
                 //OnSignalRecieved(signal);
-                Debug.WriteLine($"{signal.Type} @ {signal.Price}");
+                Console.WriteLine($"{e.SignalTime.ToShortTimeString()}: {signal.Type} @ {signal.Price}");
             }
         }
         string fileData = "";
@@ -219,7 +228,7 @@ namespace TradeSystem.Core
             {
                 var date = model.HeikinAshi.Last().TimeStamp;
                 //model.Signals.Add(signal);
-                Debug.WriteLine($"{signal.Type} @ {signal.Price}");
+                Console.WriteLine($"{signal.Type} @ {signal.Price}");
                 fileData = fileData + $"{signal.Type} , {signal.Price}" + Environment.NewLine;
             }
         }
